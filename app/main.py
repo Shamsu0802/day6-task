@@ -6,7 +6,7 @@ app = FastAPI(
 )
 
 app.include_router(churn.router)
-
+app.include_router(tickets.router, prefix="/tickets")
 
 
 @app.get("/health")
