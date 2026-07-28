@@ -1,19 +1,10 @@
-from pydantic import BaseModel
+from fastapi import APIRouter
+from app.schemas.churn import ChurnRequest, ChurnResponse
+from app.services.churn_service import predict_churn
 
-class ChurnRequest(BaseModel):
-    age: int
-    gender: str
-    tenure_months: int
-    contract_type: str
-    payment_method: str
-    monthly_charges: float
-    total_charges: float
-    num_support_tickets: int
-    tenure_years: float
-    avg_monthly_spend: float
-    tickets_per_month: float
-    tenure_category: str
+router = APIRouter()
 
 
-class ChurnResponse(BaseModel):
-    prediction: str
+@router.post("/predict/churn", response_model=ChurnResponse)
+def predict(request: ChurnRequest):
+    return predict_churn(request)
